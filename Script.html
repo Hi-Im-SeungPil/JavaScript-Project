@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>JavaScript Project</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function(){
+
+      printClock();
+      $("#1").click(keyPad);
+      $("#2").click(keyPad);
+      $("#3").click(keyPad);
+      $("#4").click(keyPad);
+      $("#5").click(keyPad);
+      $("#6").click(keyPad);
+      $("#7").click(keyPad);
+      $("#8").click(keyPad);
+      $("#9").click(keyPad);
+      $("#0").click(keyPad);
+      $("#btn_del").click(delButton);
+      $("#btn_clear").click(clearButton);
+
+    })
+    //--------------------------------------시계-----------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+      function printClock() {
+
+    let clock = document.getElementById("clock");            // 출력할 장소 선택
+    let currentDate = new Date();                                     // 현재시간
+    let calendar = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() // 현재 날짜
+    let amPm = 'AM'; // 초기값 AM
+    let currentHours = addZeros(currentDate.getHours(),2);
+    let currentMinute = addZeros(currentDate.getMinutes() ,2);
+    let currentSeconds =  addZeros(currentDate.getSeconds(),2);
+
+    if(currentHours >= 12){ // 시간이 12보다 클 때 PM으로 세팅, 12를 빼줌
+    	amPm = 'PM';
+    	currentHours = addZeros(currentHours - 12,2);
+    }
+
+    if(currentSeconds >= 50){// 50초 이상일 때 색을 변환해 준다.
+       currentSeconds = '<span style="color:#de1951;">'+currentSeconds+'</span>'
+    }
+    clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds +" <span style='font-size:20px;'>"+ amPm+"</span>"; //날짜를 출력해 줌
+
+    setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
+}
+
+function addZeros(num, digit) { // 자릿수 맞춰주기
+	  var zero = '';
+	  num = num.toString();
+	  if (num.length < digit) {
+	    for (i = 0; i < digit - num.length; i++) {
+	      zero += '0';
+	    }
+	  }
+	  return zero + num;
+}
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
+function setPrice() { //클릭시 값 입력되게
+        let price = Math.floor(Math.random()*100)*1000;
+        price =  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        $("#et_amount").val(price);
+    }
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
+function keyPad(){
+
+  let num = $(this).val();
+  let connum = $("#et_phonenum").val();
+  if(connum.length == 13){
+    alert("13자리까지 입력 가능합니다.");
+    return;
+  }
+  if(connum.length == 2 || connum.length == 7){
+    $("#et_phonenum").val(connum+num+"-");
+  }else{
+  $("#et_phonenum").val(connum+num);
+}
+
+}
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
+function delButton(){
+  let connum = $("#et_phonenum").val();
+  if(connum[connum.length-1] == "-"){
+    $("#et_phonenum").val(connum.slice(0,-2));
+  }else{
+  $("#et_phonenum").val(connum.slice(0,-1));
+  }
+}
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
+function clearButton(){
+  $("#et_phonenum").val("");
+}
+    </script>
+    <center>
+      <h1>포인트 적립 시스템</h1>
+    </center>
+
+    <center>
+      <div style="border:1px solid #dedede; width:150px; height:50px;
+        line-height:50px; color:#666;font-size:20px; text-align:center;" id="clock">
+      </div>
+    </center>
+
+  <hr>
+
+    <center>
+    <div id="amount">
+      <p>총 금액 : <input type="text" id="et_amount" value="0" style=" text-align: right" onkeydown="input(event)">
+        <input type ='button' style = "text-align: center" onclick='setPrice()' value='체크'/></p>
+      </div>
+    <center>
+
+      <center>
+      <div id="phonenum">
+        <p>핸드폰 번호 : <input type="text" id="et_phonenum" style=" text-align: right" onkeydown="input(event)">
+          <input type ='button' style = "text-align: center" onclick='input_text()' value='적립하기'/></p>
+        </div>
+      <center>
+
+        <div id = "bntgroup1">
+          <button id="1" value = "1" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >1</button>
+          <button id="2" value = "2" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >2</button>
+          <button id="3" value = "3" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >3</button>
+        </div>
+
+        <div id = "bntgroup2">
+          <button id="4" value = "4" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >4</button>
+          <button id="5" value = "5" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >5</button>
+          <button id="6" value = "6" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >6</button>
+        </div>
+
+        <div id = "bntgroup3">
+          <button id="7" value = "7" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >7</button>
+          <button id="8" value = "8" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >8</button>
+          <button id="9" value = "9" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >9</button>
+        </div>
+
+        <div id = "bntgroup4">
+          <button id = "btn_del" style = "text-align: center;  width:50px; height:50px; font-size:30px; " >X</button>
+          <button id="0" value = "0" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >0</button>
+          <button id = "btn_clear" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >C</button>
+        </div>
+
+  </head>
+  <body>
+  </body>
+</html>
