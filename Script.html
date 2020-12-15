@@ -99,7 +99,6 @@ function zeroOneZero(){
   let connum = $("#et_phonenum").val();
     $("#et_phonenum").val(connum+num);
   }
-
 }
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
@@ -125,33 +124,55 @@ function saveData(){
   let et_key = $("#et_phonenum").val();
   let price = parseInt($("#et_amount").val().replace(",",""));
   let sum = 0;
-  let check = 1;
-  for(let i = 0; i < localStorage.length - 1; i++){
-    if(localStorage.getItem(et_key) === null){
-      localStorage.setItem(et_key, price);
-      alert(et_key+" 고객님 " + price + "원 "+"적립 되서 \n총 적립금 " + price + "원 입니다");
-      check = 0;
-      break;
-    }else{
-      check = 1;
+  let check = 0;
+  if(localStorage.length != 0){
+
+    for(let i = 0; i < localStorage.length; i++){
+          if(localStorage.getItem(et_key) === null){
+            let dataArray = new Array(1,price,0,price);
+            let jsonData = JSON.stringify(dataArray);
+            localStorage.setItem(et_key, jsonData);
+            alert(et_key+" 고객님 " + price + "원 "+"적립 되서 \n현재 적립금 " + price + "원 입니다");
+            check = 0;
+            break;
+          }else{
+            check = 1;
+          }
+        }
+      }else if(localStorage.length == 0){
+        let dataArray = new Array(1,price,0,price);
+        let jsonData = JSON.stringify(dataArray);
+        localStorage.setItem(et_key, jsonData);
+        alert(et_key+" 고객님 " + price + "원 "+"적립 되서 \n현재 적립금 " + price + "원 입니다");
+        check = 0;
       }
-    }
-    if(check === 1){
-      let conprice = localStorage.getItem(et_key);
-      sum = Number(conprice) + Number(price);
-      localStorage.setItem(et_key, sum);
-      alert(et_key+" 고객님 " + price + "원 "+"적립 되서 \n총 적립금 " + sum + "원 입니다");
-    }
+
+      if(check === 1){
+        let data = localStorage.getItem(et_key);
+        let conprice = JSON.parse(data);
+        sum = Number(conprice[3]) + Number(price);
+
+        conprice[0] += 1;
+        conprice[1] = sum;
+        conprice[3] += price;
+
+        alert(et_key+" 고객님 " + price + "원 "+"적립 되서 \n현재 적립금 " + conprice[3] + "원 입니다");
+        let terrifying_data = JSON.stringify(conprice);
+        localStorage.setItem(et_key, terrifying_data);
+       }
       $("#et_phonenum").val("");
       $("#et_amount").val("0");
-
     }
   }
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
+function adminButton(){
+  location.replace("file:///C:/Users/thrhc/Desktop/Admin.html");
+}
     </script>
     <center>
-      <h1>포인트 적립 시스템</h1>
+      <h1>포인트 적립 시스템<input type ='button' style = "text-align: center; width:52px; height:30px; background-color:orange;
+      color:white; border: 1px solid white; float:right;" onclick='adminButton()' value='관리자'/></h1>
     </center>
 
     <center>
@@ -165,14 +186,14 @@ function saveData(){
     <center>
     <div id="amount">
       <h3>총 금액 : <input type="text" id="et_amount" value="0" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
-        <input type ='button' style = "text-align: center; width:52px; height:30px; background-color:orange; color:white; border: 1px solid white" onclick='setPrice()' value='체크'/></h1>
+        <input type ='button' style = "text-align: center; width:52px; height:30px; background-color:orange; color:white; border: 1px solid white" onclick='setPrice()' value='체크'/></h3>
       </div>
     <center>
 
       <center>
       <div id="phonenum">
         <h3>핸드폰 번호 : <input type="text" id="et_phonenum" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
-          <input id = "btn_save" type ='button' style = "text-align: center; width:90px; height:30px; background-color:orange; color:white ;border: 1px solid white" value='적립하기'/></h1>
+          <input id = "btn_save" type ='button' style = "text-align: center; width:90px; height:30px; background-color:orange; color:white ;border: 1px solid white" value='적립하기'/></h3>
         </div>
       <center>
 

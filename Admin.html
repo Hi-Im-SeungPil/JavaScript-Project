@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>관리자 페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style media="screen">
+    th, td{
+     border: 1px solid gray;
+     width: 200px;
+     padding: 5px;
+   }
+   th{
+        background-color: gray;
+        color:white;
+      }
+    </style>
+
+    <script>
+    $(document).ready(function(){
+      $("#1").click(keyPad);
+      $("#2").click(keyPad);
+      $("#3").click(keyPad);
+      $("#4").click(keyPad);
+      $("#5").click(keyPad);
+      $("#6").click(keyPad);
+      $("#7").click(keyPad);
+      $("#8").click(keyPad);
+      $("#9").click(keyPad);
+      $("#0").click(keyPad);
+      $("#010").click(zeroOneZero);
+      $("#btn_del").click(delButton);
+      $("#btn_clear").click(clearButton);
+      $("#btn_search").click(searchButton);
+    })
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    function keyPad(){
+
+      let num = $(this).val();
+      let connum = $("#et_phonenum").val();
+      if(connum.length == 13){
+        alert("13자리까지 입력 가능합니다.");
+        return;
+      }
+      if(connum.length == 2 || connum.length == 7){
+        $("#et_phonenum").val(connum+num+"-");
+      }else{
+      $("#et_phonenum").val(connum+num);
+    }
+
+        $("#010").disabled = true;
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    function zeroOneZero(){
+
+      if($("#et_phonenum").val().length > 0){
+        $("#010").disabled = true;
+      }else{
+      let num = $(this).val();
+      let connum = $("#et_phonenum").val();
+        $("#et_phonenum").val(connum+num);
+      }
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    function delButton(){
+      let connum = $("#et_phonenum").val();
+      if(connum[connum.length-1] == "-"){
+        $("#et_phonenum").val(connum.slice(0,-2));
+      }else{
+      $("#et_phonenum").val(connum.slice(0,-1));
+      }
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    function clearButton(){
+      $("#et_phonenum").val("");
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    function backButton(){
+      location.replace("file:///C:/Users/thrhc/Desktop/%EC%83%88%20%ED%8F%B4%EB%8D%94/Script.html");
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    function searchButton(){
+      let phone = $("#et_phonenum").val();
+      if(localStorage.getItem(phone) === null){
+        alert("등록된 정보가 없습니다.")
+      }else{
+
+        let data = localStorage.getItem(phone);
+        let out_data = JSON.parse(data);
+
+        let myTbody = document.getElementById("table_search");
+        //새로 추가할 행을 생성
+        let newRow = myTbody.insertRow(myTbody.rows.length);
+        //새로만든 행에 두 개의 새 셀을 생성한다.
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+        let cell4 = newRow.insertCell(3);
+        let cell5 = newRow.insertCell(4);
+        //새로 만들 셀에 필요한 내용을 저장한다.
+        cell1.innerHTML = phone;
+        cell2.innerHTML = out_data[0];
+        cell3.innerHTML = out_data[1];
+        cell4.innerHTML = out_data[2];
+        cell5.innerHTML = out_data[3];
+      }
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    </script>
+
+    <center>
+      <h1>포인트 적립 시스템 관리자 페이지<input type ='button' style = "text-align: center; width:70px; height:30px; background-color:orange; color:white; border: 1px solid white; float:right;" onclick='backButton()' value='돌아가기'/></h1>
+    </center>
+
+    <hr>
+
+    <center>
+    <div>
+      <h3>핸드폰 번호 : <input type="text" id="et_phonenum" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
+        <input id = "btn_search" type ='button' style = "text-align: center; width:90px; height:33px; background-color:orange; color:white ;border: 1px solid white" value='검색'/></h1>
+      </div>
+    </center>
+
+    <center>
+    <div>
+      <h3>사용할 금액 : <input type="text" id="et_amount" value="0" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
+        <input type ='button' style = "text-align: center; width:90px; height:33px; background-color:orange; color:white; border: 1px solid white" onclick='setPrice()' value='사용'/></h3>
+      </div>
+    <center>
+
+<center>
+    <div>
+      <button id="1" value = "1" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >1</button>
+      <button id="2" value = "2" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >2</button>
+      <button id="3" value = "3" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >3</button>
+    </div>
+
+    <div>
+      <button id="4" value = "4" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >4</button>
+      <button id="5" value = "5" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >5</button>
+      <button id="6" value = "6" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >6</button>
+    </div>
+
+    <div>
+      <button id="7" value = "7" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >7</button>
+      <button id="8" value = "8" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >8</button>
+      <button id="9" value = "9" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >9</button>
+    </div>
+
+    <div>
+      <button id = "btn_del" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >X</button>
+      <button id="0" value = "0" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >0</button>
+      <button id = "btn_clear" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >C</button>
+    </div>
+
+    <div>
+      <button id = "010" value = "010-" style = "text-align: center;  width:185px; height:50px; font-size:30px; margin-bottom:10px; " >010</button>
+    </div>
+</center>
+    <center>
+        <table>
+          <thead>
+            <th>핸드폰 번호</th>
+            <th>적립횟수</th>
+            <th>적립금액</th>
+            <th>사용금액</th>
+            <th>잔여 적립 금액</th>
+          </thead>
+          <tbody id="table_search">
+          </tbody>
+        </table>
+      </center>
+
+  </head>
+  <body>
+
+  </body>
+</html>
