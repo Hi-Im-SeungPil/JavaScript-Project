@@ -19,14 +19,18 @@
       $("#8").click(keyPad);
       $("#9").click(keyPad);
       $("#0").click(keyPad);
-      $("#010").click(keyPad);
+      $("#010").click(zeroOneZero);
       $("#btn_del").click(delButton);
       $("#btn_clear").click(clearButton);
       $("#btn_save").click(saveData);
+
+      $("et_amount").disabled = true;
+      $("et_phonenum").disabled = true;
+
     })
     //--------------------------------------시계-----------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------------------------------------------
-      function printClock() {
+    function printClock() {
 
     let clock = document.getElementById("clock");            // 출력할 장소 선택
     let currentDate = new Date();                                     // 현재시간
@@ -61,7 +65,7 @@ function addZeros(num, digit) { // 자릿수 맞춰주기
 }
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
-function setPrice() { //클릭시 값 입력되게
+function setPrice() {
         let price = Math.floor(Math.random()*100)*1000;
         price =  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         $("#et_amount").val(price);
@@ -82,6 +86,20 @@ function keyPad(){
   $("#et_phonenum").val(connum+num);
 }
 
+    $("#010").disabled = true;
+}
+//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
+function zeroOneZero(){
+
+  if($("#et_phonenum").val().length > 0){
+    $("#010").disabled = true;
+  }else{
+  let num = $(this).val();
+  let connum = $("#et_phonenum").val();
+    $("#et_phonenum").val(connum+num);
+  }
+
 }
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +119,9 @@ function clearButton(){
 //-------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------
 function saveData(){
-
+  if($("#et_amount").val() == 0 || $("#et_phonenum").val().length == 0){
+    alert("빈 칸이 없게 작성해 주세요");
+  }else{
   let et_key = $("#et_phonenum").val();
   let price = parseInt($("#et_amount").val().replace(",",""));
   let sum = 0;
@@ -109,6 +129,7 @@ function saveData(){
   for(let i = 0; i < localStorage.length - 1; i++){
     if(localStorage.getItem(et_key) === null){
       localStorage.setItem(et_key, price);
+      alert(et_key+" 고객님 " + price + "원 "+"적립 되서 \n총 적립금 " + price + "원 입니다");
       check = 0;
       break;
     }else{
@@ -119,6 +140,11 @@ function saveData(){
       let conprice = localStorage.getItem(et_key);
       sum = Number(conprice) + Number(price);
       localStorage.setItem(et_key, sum);
+      alert(et_key+" 고객님 " + price + "원 "+"적립 되서 \n총 적립금 " + sum + "원 입니다");
+    }
+      $("#et_phonenum").val("");
+      $("#et_amount").val("0");
+
     }
   }
 //-------------------------------------------------------------------------------------------------------------------------------
@@ -138,38 +164,38 @@ function saveData(){
 
     <center>
     <div id="amount">
-      <p>총 금액 : <input type="text" id="et_amount" value="0" style=" text-align: right" onkeydown="input(event)">
-        <input type ='button' style = "text-align: center" onclick='setPrice()' value='체크'/></p>
+      <h3>총 금액 : <input type="text" id="et_amount" value="0" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
+        <input type ='button' style = "text-align: center; width:52px; height:30px; background-color:orange; color:white; border: 1px solid white" onclick='setPrice()' value='체크'/></h1>
       </div>
     <center>
 
       <center>
       <div id="phonenum">
-        <p>핸드폰 번호 : <input type="text" id="et_phonenum" style=" text-align: right" onkeydown="input(event)">
-          <input id = "btn_save" type ='button' style = "text-align: center" value='적립하기'/></p>
+        <h3>핸드폰 번호 : <input type="text" id="et_phonenum" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
+          <input id = "btn_save" type ='button' style = "text-align: center; width:90px; height:30px; background-color:orange; color:white ;border: 1px solid white" value='적립하기'/></h1>
         </div>
       <center>
 
-        <div id = "bntgroup1">
+        <div>
           <button id="1" value = "1" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >1</button>
           <button id="2" value = "2" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >2</button>
           <button id="3" value = "3" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >3</button>
         </div>
 
-        <div id = "bntgroup2">
+        <div>
           <button id="4" value = "4" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >4</button>
           <button id="5" value = "5" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >5</button>
           <button id="6" value = "6" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >6</button>
         </div>
 
-        <div id = "bntgroup3">
+        <div>
           <button id="7" value = "7" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >7</button>
           <button id="8" value = "8" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >8</button>
           <button id="9" value = "9" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >9</button>
         </div>
 
-        <div id = "bntgroup4">
-          <button id = "btn_del" style = "text-align: center;  width:50px; height:50px; font-size:30px; " >X</button>
+        <div>
+          <button id = "btn_del" style = "text-align: center;  width:50px; height:50px; font-size:30px;" >X</button>
           <button id="0" value = "0" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-left:10px;" >0</button>
           <button id = "btn_clear" style = "text-align: center;  width:50px; height:50px; font-size:30px; margin-bottom:10px; margin-left:10px;" >C</button>
         </div>
