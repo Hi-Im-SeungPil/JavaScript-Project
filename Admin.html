@@ -87,6 +87,11 @@
     //-------------------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------------------------------------------
     function searchButton(){
+
+      if(document.getElementById("table_search").rows.length > 0){
+      document.getElementById("table_search").deleteRow(0);
+      }
+
       let phone = $("#et_phonenum").val();
       if(localStorage.getItem(phone) === null){
         alert("등록된 정보가 없습니다.")
@@ -107,13 +112,48 @@
         //새로 만들 셀에 필요한 내용을 저장한다.
         cell1.innerHTML = phone;
         cell2.innerHTML = out_data[0];
-        cell3.innerHTML = out_data[1];
+        cell3.innerHTML = out_data[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
         cell4.innerHTML = out_data[2];
-        cell5.innerHTML = out_data[3];
+        cell5.innerHTML = out_data[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+
       }
+      $("#et_amount").val("0");
     }
     //-------------------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------------------------------------------
+    function setPrice() {
+            let price = Math.floor(Math.random()*100)*1000;
+            price =  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $("#et_amount").val(price);
+        }
+    //-------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------------------
+    function makeAPoint(){
+      if($("#et_phonenum").val() === "" || $("#et_amount").val() == 0){
+        alert("빈칸 없이 작성해 주세요");
+      }else{
+        let phone = $("#et_phonenum").val();
+        let data = localStorage.getItem(phone);
+        let usepoint = parseInt($("#et_amount").val().replace(",",""));
+        let nowpoint = JSON.parse(data);
+
+        if(nowpoint[3] - usepoint >= 0){
+        nowpoint[2] += usepoint;
+        nowpoint[3] -= usepoint;
+
+        let terrifying_data = JSON.stringify(nowpoint);
+
+        alert(phone + " 고객님 " + usepoint + "원 사용하셔서 \n남은 잔액" + nowpoint[3] + "원 입니다.");
+
+        localStorage.setItem(phone,terrifying_data);
+        $("#et_amount").val("0");
+        $("#et_phonenum").val("");
+
+      }else{
+        alert("적립금 잔액이 부족합니다");
+      }
+    }
+    }
     </script>
 
     <center>
@@ -132,7 +172,8 @@
     <center>
     <div>
       <h3>사용할 금액 : <input type="text" id="et_amount" value="0" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
-        <input type ='button' style = "text-align: center; width:90px; height:33px; background-color:orange; color:white; border: 1px solid white" onclick='setPrice()' value='사용'/></h3>
+        <input type ='button' style = "text-align: center; width:52px; height:33px; background-color:orange; color:white; border: 1px solid white" onclick='setPrice()' value='체크'/>
+        <input type ='button' style = "text-align: center; width:90px; height:33px; background-color:orange; color:white; border: 1px solid white" onclick='makeAPoint()' value='사용'/></h3>
       </div>
     <center>
 
