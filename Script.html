@@ -150,7 +150,7 @@ function saveData(){
       if(check === 1){
         let data = localStorage.getItem(et_key);
         let conprice = JSON.parse(data);
-        sum = Number(conprice[3]) + Number(price);
+        sum = Number(conprice[1]) + Number(price);
 
         conprice[0] += 1;
         conprice[1] = sum;
@@ -171,7 +171,7 @@ function adminButton(){
 }
     </script>
     <center>
-      <h1>포인트 적립 시스템<input type ='button' style = "text-align: center; width:52px; height:30px; background-color:orange;
+      <h1 style = "padding-left:70px">포인트 적립 시스템<input type ='button' style = "text-align: center; width:52px; height:30px; background-color:orange;
       color:white; border: 1px solid white; float:right;" onclick='adminButton()' value='관리자'/></h1>
     </center>
 

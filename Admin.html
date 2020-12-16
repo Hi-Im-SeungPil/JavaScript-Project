@@ -103,18 +103,18 @@
         let myTbody = document.getElementById("table_search");
         //새로 추가할 행을 생성
         let newRow = myTbody.insertRow(myTbody.rows.length);
-        //새로만든 행에 두 개의 새 셀을 생성한다.
+
         let cell1 = newRow.insertCell(0);
         let cell2 = newRow.insertCell(1);
         let cell3 = newRow.insertCell(2);
         let cell4 = newRow.insertCell(3);
         let cell5 = newRow.insertCell(4);
-        //새로 만들 셀에 필요한 내용을 저장한다.
+
         cell1.innerHTML = phone;
         cell2.innerHTML = out_data[0];
-        cell3.innerHTML = out_data[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
-        cell4.innerHTML = out_data[2];
-        cell5.innerHTML = out_data[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+        cell3.innerHTML = out_data[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        cell4.innerHTML = out_data[2].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        cell5.innerHTML = out_data[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
       }
       $("#et_amount").val("0");
@@ -146,6 +146,11 @@
         alert(phone + " 고객님 " + usepoint + "원 사용하셔서 \n남은 잔액" + nowpoint[3] + "원 입니다.");
 
         localStorage.setItem(phone,terrifying_data);
+
+        if(document.getElementById("table_search").rows.length > 0){
+        document.getElementById("table_search").deleteRow(0);
+        }
+
         $("#et_amount").val("0");
         $("#et_phonenum").val("");
 
@@ -157,7 +162,7 @@
     </script>
 
     <center>
-      <h1>포인트 적립 시스템 관리자 페이지<input type ='button' style = "text-align: center; width:70px; height:30px; background-color:orange; color:white; border: 1px solid white; float:right;" onclick='backButton()' value='돌아가기'/></h1>
+      <h1 style = "padding-left:90px">포인트 적립 시스템 관리자 페이지<input type ='button' style = "text-align: center; width:70px; height:30px; background-color:orange; color:white; border: 1px solid white; float:right;" onclick='backButton()' value='돌아가기'/></h1>
     </center>
 
     <hr>
@@ -171,7 +176,7 @@
 
     <center>
     <div>
-      <h3>사용할 금액 : <input type="text" id="et_amount" value="0" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
+      <h3 style = "padding-left:60px">사용할 금액 : <input type="text" id="et_amount" value="0" style= "text-align: right; height:25px; font-size:20px;" onkeydown="input(event)" disabled = true>
         <input type ='button' style = "text-align: center; width:52px; height:33px; background-color:orange; color:white; border: 1px solid white" onclick='setPrice()' value='체크'/>
         <input type ='button' style = "text-align: center; width:90px; height:33px; background-color:orange; color:white; border: 1px solid white" onclick='makeAPoint()' value='사용'/></h3>
       </div>
