@@ -12,8 +12,8 @@
    
 4. 입력안한 정보가(빈칸이) 있는데 적립하기를 누르면 alert로 알려준다.
    
-5. 키패드 010은 맨처음 한번만 누를 수 있고 X , C 버튼을 구현했다. 그리고 핸드폰번호 형식에 맞춰 -가 자동으로 추가된다. 지울 때는 -가 
-   자동으로 지워진다.
+5. 키패드 010은 맨처음 한번만 누를 수 있고 X , C 버튼을 구현했다. 그리고 핸드폰번호 형식에 맞춰 -가 자동으로 추가된다.  
+   지울 때는 -가 자동으로 지워진다.
 
 6. 저장할 때 핸드폰번호가 중복되면 적립횟수 +1, 총적립액,현재잔액이 누적된다.
 
@@ -38,9 +38,16 @@
 ***
 ***
 ## 만약 사용자 화면에 "관리자 버튼"이나 관리자 화면에 "돌아가기 버튼"이 동작하지 않을경우
-제가 화면전환을 location.replace(window.location.hostname + "Admin.html"); 이런식으로 설정해서
-상위폴더 절대경로를 window.location.hostname으로 받은다음 파일이름을 붙였습니다.
-제 노트북에서는 문제없이 잘 되는데 혹시나 안될경우
-Script.html파일의 170번째 줄 location.replace("교수님의 컴퓨터의 Admin.html이 있는 절대경로");
-Admin.html파일의 85번째 줄 location.replace("교수님의 컴퓨터의 Script.html이 있는 절대경로");
+제가 화면전환을 location.replace(window.location.hostname + "Admin.html"); 이런식으로 설정해서  
+
+상위폴더 절대경로를 window.location.hostname으로 받은다음 파일이름을 붙였습니다.  
+
+제 노트북에서는 문제없이 잘 되는데 혹시나 안될경우  
+
+Script.html파일의 170번째 줄 location.replace("교수님의 컴퓨터의 Admin.html이 있는 절대경로");  
+
+Admin.html파일의 85번째 줄 location.replace("교수님의 컴퓨터의 Script.html이 있는 절대경로");  
+
 이렇게 수정해서 실행해주시면 감사하겠습니다!
+***
+# 감사합니다
