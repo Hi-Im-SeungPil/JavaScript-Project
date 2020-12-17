@@ -45,9 +45,10 @@
 제 노트북에서는 문제없이 잘 되는데 혹시나 안될경우  
 
 Script.html파일의 170번째 줄 location.replace("교수님의 컴퓨터의 Admin.html이 있는 절대경로");  
+ex) location.replace("file:///C:/Users/user1/Desktop/Admin.html");  
 
 Admin.html파일의 85번째 줄 location.replace("교수님의 컴퓨터의 Script.html이 있는 절대경로");  
 
-이렇게 수정해서 실행해주시면 감사하겠습니다!
+이렇게 수정해서 실행해 주시면 감사하겠습니다!
 ***
 # 감사합니다
